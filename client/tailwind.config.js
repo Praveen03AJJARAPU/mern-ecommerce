@@ -8,6 +8,7 @@ export default {
     extend: {
       fontFamily: {
         orbit : ['Orbitron', 'sans'],
+        inter : ['Inter', 'sans']
       }
     },
   },

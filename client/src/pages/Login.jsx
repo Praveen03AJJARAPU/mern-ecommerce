@@ -28,12 +28,10 @@ function Login() {
         { withCredentials: true }
       );
       const { success, message } = data;
-      console.log(data, success)
+      
       if (success) {
-        toast.success(message, { position: "bottom-center" });
-        setTimeout(() => {
-          nav("/");
-        }, 1000);
+        toast.success(message, { position: "bottom-center" });       
+        nav("/");
       } else toast.error(message, { position: "bottom-center" });
     } catch (err) {
       console.log(err);

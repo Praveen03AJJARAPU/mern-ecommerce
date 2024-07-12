@@ -5,12 +5,18 @@ const bcrypt = require('bcrypt');
 module.exports.signUp = async(req, res, next) => {
     try {
         const {email, password, username } = req.body;
+        const image = req.file.filename;
         const exUser = await User.findOne({email});
         if(exUser) {
             return res.json({message: 'User already exists'});
         }
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = await User.create({username, email, password: hashedPassword});
+        const user = await User.create({
+          username,
+          email,
+          password: hashedPassword,
+          image,
+        });
         const token = createSectretToken(user._id);
         res.cookie('token', token, {
             withCredentials: true,
@@ -42,8 +48,8 @@ module.exports.Login = async(req, res, next) => {
         withCredentials: true,
         httpOnly: false,
       })
-      res.status(201).json({message: 'user logged in', success: true,})
-      next();
+      res.status(201).json({message: 'user logged in', logUser, success: true,})
+     
     } catch(err) {
         console.log(err);
     }
